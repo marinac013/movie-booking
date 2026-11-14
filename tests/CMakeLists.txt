@@ -17,10 +17,10 @@ FetchContent_MakeAvailable(googletest)
 # Test executable
 add_executable(movie_booking_tests
     main_tests.cpp
-    unit/movie_tests.cpp
-    unit/seat_tests.cpp
-    unit/theater_tests.cpp
-    unit/screening_tests.cpp
+    unit/domain/movie_tests.cpp
+    unit/domain/seat_tests.cpp
+    unit/domain/theater_tests.cpp
+    unit/domain/screening_tests.cpp
     unit/repos/movie_repo_tests.cpp
     unit/repos/theater_repo_tests.cpp
     unit/repos/screening_repo_tests.cpp

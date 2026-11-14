@@ -1,7 +1,12 @@
+#pragma once
+
 #include "domain/screening.h"
 
 #include <optional>
 #include <unordered_map>
+#include <shared_mutex>
+#include <memory>
+#include <mutex>
 #include <vector>
 
 namespace MovieBooking
@@ -44,8 +49,22 @@ public:
     */
     bool Update(const Screening& screening);
 
+    /**
+     * @brief Acquires the exclusive lock for a screening.
+     *
+     * The returned lock must remain alive for the entire operation
+     * that requires exclusive access to the screening.
+     *
+     * @param screeningId Screening ID.
+     * @return An acquired unique lock.
+     */
+    std::unique_lock<std::mutex> LockFor(uint screeningId) const;
+
 private:
     std::unordered_map<uint, Screening> screenings;
+    mutable std::shared_mutex repositoryMutex;
+    mutable std::unordered_map<uint, std::shared_ptr<std::mutex>> screeningLocks;
+    mutable std::mutex locksMutex;
 };
 
 }

@@ -28,6 +28,7 @@ add_executable(movie_booking_tests
     unit/repos/booking_repo_tests.cpp
     unit/services/catalog_service_tests.cpp
     unit/services/booking_service_tests.cpp
+    unit/services/booking_service_concurrency_tests.cpp
 )
 
 target_link_libraries(movie_booking_tests

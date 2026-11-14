@@ -1,3 +1,5 @@
+#pragma once
+
 #include "domain/movie.h"
 
 #include <optional>

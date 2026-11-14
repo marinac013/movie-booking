@@ -48,6 +48,7 @@ target_compile_features(movie_booking_core
 # --------------------------------------------------
 # Application Executable
 # --------------------------------------------------
+find_package(Threads REQUIRED)
 
 add_executable(movie_booking
     src/main.cpp
@@ -56,8 +57,9 @@ add_executable(movie_booking
 target_link_libraries(movie_booking
     PRIVATE
         movie_booking_core
+    PUBLIC
+        Threads::Threads
 )
-
 
 # --------------------------------------------------
 # Compiler Warnings

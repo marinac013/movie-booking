@@ -5,6 +5,8 @@ namespace MovieBooking
 
 bool BookingRepository::Add(const Booking& booking)
 {
+    std::unique_lock<std::shared_mutex> lock(this->repositoryMutex);
+    
     const auto result = this->bookings.emplace(booking.GetId(), booking);
 
     return result.second;
@@ -12,6 +14,9 @@ bool BookingRepository::Add(const Booking& booking)
 
 std::optional<Booking> BookingRepository::FindById(uint id) const
 {
+    
+    std::shared_lock<std::shared_mutex> lock(this->repositoryMutex);
+
     const auto it = this->bookings.find(id);
 
     if (it == this->bookings.end())
@@ -24,6 +29,7 @@ std::optional<Booking> BookingRepository::FindById(uint id) const
 
 std::vector<Booking> BookingRepository::GetAll() const
 {
+    std::shared_lock<std::shared_mutex> lock(this->repositoryMutex);
     std::vector<Booking> bookings;
 
     bookings.reserve(this->bookings.size());
@@ -38,6 +44,7 @@ std::vector<Booking> BookingRepository::GetAll() const
 
 bool BookingRepository::Exists(uint id) const
 {
+    std::shared_lock<std::shared_mutex> lock(this->repositoryMutex);
     return this->bookings.find(id) != this->bookings.end();
 }
 

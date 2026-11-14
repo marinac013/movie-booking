@@ -1,3 +1,5 @@
+#pragma once
+
 #include "domain/theater.h"
 
 #include <optional>

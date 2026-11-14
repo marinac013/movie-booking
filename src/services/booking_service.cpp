@@ -18,6 +18,9 @@ BookingResult BookingService::BookSeats(
     uint screeningId,
     const std::vector<std::string>& seatIds)
 {
+    // Acquire exclusive access to this screening.
+    auto screeningLock = this->screeningRepository.LockFor(screeningId);
+    
     // Check whether the screening exists.
     auto screening = this->screeningRepository.FindById(screeningId);
 
@@ -63,7 +66,7 @@ BookingResult BookingService::BookSeats(
 
     // Create the booking.
     Booking booking(
-        this->nextBookingId,
+        this->nextBookingId.fetch_add(1, std::memory_order_relaxed),
         screeningId,
         seatIds,
         std::chrono::system_clock::now());
@@ -80,8 +83,6 @@ BookingResult BookingService::BookSeats(
 
         return { BookingStatus::PersistenceError, std::nullopt };
     }
-
-    ++this->nextBookingId;
 
     return { BookingStatus::Success, booking };
 }

@@ -76,7 +76,6 @@ private:
     Theater theater;
     std::chrono::system_clock::time_point startTime;
     std::unordered_set<std::string> bookedSeatIds;
-
 };
 
 }

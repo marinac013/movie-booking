@@ -6,6 +6,7 @@
 #include <optional>
 #include <string>
 #include <vector>
+#include <atomic>
 
 namespace MovieBooking
 {
@@ -53,7 +54,7 @@ private:
     ScreeningRepository& screeningRepository;
     BookingRepository& bookingRepository;
 
-    uint nextBookingId = 1;
+    std::atomic<uint> nextBookingId{1};
 };
 
 }

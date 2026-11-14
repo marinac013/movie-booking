@@ -1,8 +1,12 @@
+#pragma once
+
 #include "domain/booking.h"
 
 #include <optional>
+#include <shared_mutex>
 #include <unordered_map>
 #include <vector>
+#include <mutex>
 
 namespace MovieBooking
 {
@@ -36,6 +40,7 @@ public:
 
 private:
     std::unordered_map<uint, Booking> bookings;
+    mutable std::shared_mutex repositoryMutex;
 };
 
 }

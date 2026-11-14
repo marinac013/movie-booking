@@ -60,7 +60,7 @@ Run the application:
 ```bash
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
 
-cmake --build build -j$(sysctl -n hw.ncpu)
+cmake --build build --parallel
 ```
 
 Run the application:

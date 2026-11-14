@@ -17,6 +17,10 @@ FetchContent_MakeAvailable(googletest)
 # Test executable
 add_executable(movie_booking_tests
     main_tests.cpp
+    unit/movie_tests.cpp
+    unit/seat_tests.cpp
+    unit/theater_tests.cpp
+    unit/screening_tests.cpp
 )
 
 target_link_libraries(movie_booking_tests

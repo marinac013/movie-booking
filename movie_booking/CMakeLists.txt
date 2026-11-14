@@ -21,6 +21,10 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_library(movie_booking_core
     src/app_info.cpp
+    src/domain/movie.cpp
+    src/domain/theater.cpp
+    src/domain/seat.cpp
+    src/domain/screening.cpp
 )
 
 target_include_directories(movie_booking_core

@@ -28,6 +28,7 @@ add_library(movie_booking_core
     src/repos/movie_repo.cpp
     src/repos/theater_repo.cpp
     src/repos/screening_repo.cpp
+    src/services/catalog_service.cpp
 )
 
 target_include_directories(movie_booking_core

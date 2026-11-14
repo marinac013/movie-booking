@@ -25,6 +25,9 @@ add_library(movie_booking_core
     src/domain/theater.cpp
     src/domain/seat.cpp
     src/domain/screening.cpp
+    src/repos/movie_repo.cpp
+    src/repos/theater_repo.cpp
+    src/repos/screening_repo.cpp
 )
 
 target_include_directories(movie_booking_core

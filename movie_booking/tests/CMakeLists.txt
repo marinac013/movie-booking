@@ -21,6 +21,9 @@ add_executable(movie_booking_tests
     unit/seat_tests.cpp
     unit/theater_tests.cpp
     unit/screening_tests.cpp
+    unit/repos/movie_repo_tests.cpp
+    unit/repos/theater_repo_tests.cpp
+    unit/repos/screening_repo_tests.cpp
 )
 
 target_link_libraries(movie_booking_tests

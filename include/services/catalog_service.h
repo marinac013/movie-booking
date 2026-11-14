@@ -1,3 +1,5 @@
+#pragma once
+
 #include "repos/movie_repo.h"
 #include "repos/theater_repo.h"
 #include "repos/screening_repo.h"

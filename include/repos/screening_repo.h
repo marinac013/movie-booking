@@ -37,6 +37,13 @@ public:
      */
     bool Exists(uint id) const;
 
+    /**
+    * @brief Updates an existing screening.
+    * @param screening Updated screening.
+    * @return True if the screening existed and was updated.
+    */
+    bool Update(const Screening& screening);
+
 private:
     std::unordered_map<uint, Screening> screenings;
 };

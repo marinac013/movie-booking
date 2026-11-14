@@ -42,4 +42,18 @@ bool ScreeningRepository::Exists(uint id) const
     return this->screenings.find(id) != this->screenings.end();
 }
 
+bool ScreeningRepository::Update(const Screening& screening)
+{
+    const auto it = this->screenings.find(screening.GetId());
+
+    if (it == this->screenings.end())
+    {
+        return false;
+    }
+
+    it->second = screening;
+
+    return true;
+}
+
 }

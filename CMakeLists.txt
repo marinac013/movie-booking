@@ -25,10 +25,13 @@ add_library(movie_booking_core
     src/domain/theater.cpp
     src/domain/seat.cpp
     src/domain/screening.cpp
+    src/domain/booking.cpp
     src/repos/movie_repo.cpp
     src/repos/theater_repo.cpp
     src/repos/screening_repo.cpp
+    src/repos/booking_repo.cpp
     src/services/catalog_service.cpp
+    src/services/booking_service.cpp
 )
 
 target_include_directories(movie_booking_core

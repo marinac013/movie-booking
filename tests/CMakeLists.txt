@@ -21,10 +21,13 @@ add_executable(movie_booking_tests
     unit/domain/seat_tests.cpp
     unit/domain/theater_tests.cpp
     unit/domain/screening_tests.cpp
+    unit/domain/booking_tests.cpp
     unit/repos/movie_repo_tests.cpp
     unit/repos/theater_repo_tests.cpp
     unit/repos/screening_repo_tests.cpp
+    unit/repos/booking_repo_tests.cpp
     unit/services/catalog_service_tests.cpp
+    unit/services/booking_service_tests.cpp
 )
 
 target_link_libraries(movie_booking_tests

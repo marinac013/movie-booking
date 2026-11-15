@@ -14,6 +14,8 @@ The backend is implemented in C++17 and uses CMake as its build system.
 - C++17
 - CMake 3.20+
 - GoogleTest
+- Drogon
+- JsonCpp
 - STL
 
 ## Prerequisites
@@ -23,14 +25,21 @@ The backend is implemented in C++17 and uses CMake as its build system.
 - CMake 3.20 or newer
 - Internet connection for initial GoogleTest download
 
+```bash
+sudo apt update
+sudo apt install -y git gcc g++ cmake libjsoncpp-dev uuid-dev zlib1g-dev \
+  libssl-dev libbrotli-dev libc-ares-dev libpq-dev libmariadb-dev \
+  libsqlite3-dev libhiredis-dev
+
+```
+
 ## Build Instructions
 
 ### Linux
 
 ```bash
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
-
-cmake --build build -j$(nproc)
+cmake --build build --parallel
 ```
 
 Run the application:
@@ -71,9 +80,12 @@ Run the application:
 
 ## Running Tests
 
-Execute all unit tests:
+The test suite covers this application only; tests from fetched libraries are
+disabled. Configure with `BUILD_TESTING=ON` to build and run the application tests:
 
 ```bash
+cmake -S . -B build -DBUILD_TESTING=ON
+cmake --build build --parallel
 ctest --test-dir build --output-on-failure
 ```
 
@@ -89,16 +101,29 @@ ctest --test-dir build -C Debug --output-on-failure
 - Cross-platform CMake configuration
 - GoogleTest integration
 - Basic application information module
-
-## Future Development
-
 - Movie and theater management
 - Screening management
 - Seat availability
 - Ticket booking
 - Concurrent booking protection
+- HTTP Server (Drogon)
+
+## Future Development
+
 - REST API
 - Docker support
+
+## REST API Interface for Backend Application
+| Method | Endpoint | Purpose |
+|---|---|---|
+| `GET` | `/api/movies` | List all movies |
+| `GET` | `/api/movies/{id}` | Get movie details |
+| `GET` | `/api/movies/{id}/theaters` | List theaters showing a movie |
+| `GET` | `/api/movies/{id}/screenings` | List screenings for a movie |
+| `GET` | `/api/theaters/{id}/screenings` | List screenings at a theater |
+| `GET` | `/api/screenings/{id}/seats` | List available seats |
+| `POST` | `/api/screenings/{id}/bookings` | Book one or more seats |
+| `GET` | `/api/bookings/{id}` | Get booking details |
 
 ## Limitations
 

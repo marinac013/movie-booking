@@ -129,6 +129,15 @@ ctest --test-dir build -C Debug --output-on-failure
 | POST | `/api/screenings/{id}/bookings` | Book seats |
 | GET | `/api/bookings/{id}` | Retrieve a booking |
 
+## Responsibilities
+
+| Component | Responsibility |
+|---|---|
+| `backend` | REST API, business logic, domain model, repositories, concurrency and in-memory storage |
+| `frontend` | CLI interface, user input, displaying results and communicating with the backend |
+| `frontend/api_client` | HTTP communication with the backend REST API |
+| `frontend/menu` | CLI menus and booking workflow |
+
 ## Limitations
 
 The current version is an initial project setup. Booking functionality and persistent storage have not yet been implemented.

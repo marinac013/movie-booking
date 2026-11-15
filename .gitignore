@@ -1,7 +1,8 @@
 # Build directories
 backend/build/
+backend/uploads/
 frontend/build/
-uploads/
+frontend/uploads/
 
 # CMake generated files
 CMakeFiles/

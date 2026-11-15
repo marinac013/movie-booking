@@ -1,7 +1,7 @@
 # Build directories
-build/
-cmake-build-*/
-out/
+backend/build/
+frontend/build/
+uploads/
 
 # CMake generated files
 CMakeFiles/

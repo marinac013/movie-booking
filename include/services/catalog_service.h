@@ -58,6 +58,13 @@ public:
      */
     std::vector<Screening> GetScreeningsForTheater(uint theaterId) const;
 
+    /**
+     * @brief Finds a screening by its ID.
+     * @param screeningId Screening ID.
+     * @return The screening if found; otherwise std::nullopt.
+     */
+    std::optional<Screening> GetScreeningById(int screeningId) const;
+
 private:
     MovieRepository& movieRepository;
     TheaterRepository& theaterRepository;

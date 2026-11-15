@@ -72,6 +72,9 @@ add_library(movie_booking_core
     src/services/catalog_service.cpp
     src/services/booking_service.cpp
     src/api/booking_controller.cpp
+    src/api/movie_controller.cpp
+    src/api/screening_controller.cpp
+    src/api/theater_controller.cpp
 )
 
 target_include_directories(movie_booking_core

@@ -85,4 +85,10 @@ std::vector<Screening> CatalogService::GetScreeningsForTheater(uint theaterId) c
     return result;
 }
 
+std::optional<Screening> CatalogService::GetScreeningById(
+    int screeningId) const
+{
+    return this->screeningRepository.FindById(screeningId);
+}
+
 }

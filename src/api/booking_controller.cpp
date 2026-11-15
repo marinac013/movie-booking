@@ -1,4 +1,5 @@
 #include "api/booking_controller.h"
+#include "api/api_response.h"
 
 #include <drogon/drogon.h>
 
@@ -149,6 +150,41 @@ void BookingController::RegisterRoutes(BookingService& bookingService)
             callback(httpResponse);
         },
         {drogon::Post});
+    
+    // GET /api/bookings/{id}
+    drogon::app().registerHandler(
+        "/api/bookings/{1}",
+        [&bookingService](
+            const drogon::HttpRequestPtr&,
+            std::function<void(const drogon::HttpResponsePtr&)>&& callback,
+            int bookingId)
+        {
+            const auto booking =
+                bookingService.GetBookingById(bookingId);
+
+            if (!booking.has_value())
+            {
+                callback(ApiResponse::Error(
+                    "Booking not found.",
+                    drogon::k404NotFound));
+                return;
+            }
+
+            Json::Value response;
+            response["bookingId"] = booking->GetId();
+            response["screeningId"] = booking->GetScreeningId();
+            response["seats"] = Json::Value(Json::arrayValue);
+
+            for (const auto& seatId : booking->GetSeatIds())
+            {
+                response["seats"].append(seatId);
+            }
+
+            response["status"] = "success";
+
+            callback(ApiResponse::Json(response));
+        },
+        {drogon::Get});
 }
 
 }

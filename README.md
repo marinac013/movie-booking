@@ -107,23 +107,27 @@ ctest --test-dir build -C Debug --output-on-failure
 - Ticket booking
 - Concurrent booking protection
 - HTTP Server (Drogon)
+- REST API
 
 ## Future Development
 
-- REST API
+- Doxygen Documentation
 - Docker support
+- Front-end Console Application
+- clang-tidy
 
 ## REST API Interface for Backend Application
 | Method | Endpoint | Purpose |
 |---|---|---|
-| `GET` | `/api/movies` | List all movies |
-| `GET` | `/api/movies/{id}` | Get movie details |
-| `GET` | `/api/movies/{id}/theaters` | List theaters showing a movie |
-| `GET` | `/api/movies/{id}/screenings` | List screenings for a movie |
-| `GET` | `/api/theaters/{id}/screenings` | List screenings at a theater |
-| `GET` | `/api/screenings/{id}/seats` | List available seats |
-| `POST` | `/api/screenings/{id}/bookings` | Book one or more seats |
-| `GET` | `/api/bookings/{id}` | Get booking details |
+| GET | `/api/health` | Server health |
+| GET | `/api/movies` | List movies |
+| GET | `/api/movies/{id}` | Movie details |
+| GET | `/api/movies/{id}/theaters` | Theaters showing a movie |
+| GET | `/api/movies/{id}/screenings` | Screenings for a movie |
+| GET | `/api/theaters/{id}/screenings` | Screenings at a theater |
+| GET | `/api/screenings/{id}/seats` | Available seats |
+| POST | `/api/screenings/{id}/bookings` | Book seats |
+| GET | `/api/bookings/{id}` | Retrieve a booking |
 
 ## Limitations
 

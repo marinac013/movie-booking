@@ -50,6 +50,13 @@ public:
         uint screeningId,
         const std::vector<std::string>& seatIds);
 
+    /**
+    * @brief Finds a booking by its ID.
+    * @param bookingId Booking ID.
+    * @return The booking if found; otherwise std::nullopt.
+    */
+    std::optional<Booking> GetBookingById(int bookingId) const;
+
 private:
     ScreeningRepository& screeningRepository;
     BookingRepository& bookingRepository;

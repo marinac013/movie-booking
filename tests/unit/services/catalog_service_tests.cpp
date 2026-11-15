@@ -140,3 +140,20 @@ TEST_F(CatalogServiceTests, GetScreeningsForNonexistentTheater)
 
     EXPECT_TRUE(screenings.empty());
 }
+
+TEST_F(CatalogServiceTests, GetExistingScreeningById)
+{
+    const auto screening = service.GetScreeningById(1);
+
+    ASSERT_TRUE(screening.has_value());
+    EXPECT_EQ(screening->GetId(), 1);
+    EXPECT_EQ(screening->GetMovie().GetId(), 1);
+    EXPECT_EQ(screening->GetTheater().GetId(), 1);
+}
+
+TEST_F(CatalogServiceTests, GetNonexistentScreeningById)
+{
+    const auto screening = service.GetScreeningById(100);
+
+    EXPECT_FALSE(screening.has_value());
+}

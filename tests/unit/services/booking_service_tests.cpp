@@ -190,3 +190,25 @@ TEST_F(BookingServiceTests, AllTwentySeatsCanBeBooked)
     ASSERT_TRUE(screening.has_value());
     EXPECT_TRUE(screening->GetAvailableSeats().empty());
 }
+
+TEST_F(BookingServiceTests, GetBookingByIdReturnsExistingBooking)
+{
+    const auto bookingResult = service.BookSeats(1, { "A1" });
+
+    ASSERT_TRUE(bookingResult.IsSuccess());
+    ASSERT_TRUE(bookingResult.booking.has_value());
+
+    const int bookingId = bookingResult.booking->GetId();
+
+    const auto retrievedBooking = service.GetBookingById(bookingId);
+
+    ASSERT_TRUE(retrievedBooking.has_value());
+    EXPECT_EQ(retrievedBooking->GetId(), bookingId);
+}
+
+TEST_F(BookingServiceTests, GetBookingByIdReturnsNulloptForNonexistentBooking)
+{
+    const auto retrievedBooking = service.GetBookingById(100);
+
+    EXPECT_FALSE(retrievedBooking.has_value());
+}

@@ -87,4 +87,10 @@ BookingResult BookingService::BookSeats(
     return { BookingStatus::Success, booking };
 }
 
+std::optional<Booking> BookingService::GetBookingById(
+    int bookingId) const
+{
+    return this->bookingRepository.FindById(bookingId);
+}
+
 }

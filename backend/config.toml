@@ -1,0 +1,5 @@
+# Configures backend network address
+[server]
+ip = "127.0.0.1"
+port = 8080
+threads = 4

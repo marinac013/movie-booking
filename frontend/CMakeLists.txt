@@ -50,6 +50,15 @@ set(BUILD_CTL OFF CACHE BOOL "" FORCE)
 
 FetchContent_MakeAvailable(drogon)
 
+include(FetchContent)
+FetchContent_Declare(
+    tomlplusplus
+    GIT_REPOSITORY https://github.com/marzer/tomlplusplus.git
+    GIT_TAG        v3.4.0
+    GIT_SHALLOW    TRUE
+)
+FetchContent_MakeAvailable(tomlplusplus)
+
 set(BUILD_TESTING ${_movie_booking_frontend_build_testing})
 
 
@@ -59,6 +68,7 @@ set(BUILD_TESTING ${_movie_booking_frontend_build_testing})
 
 add_library(movie_booking_frontend_core
     src/api_client.cpp
+    src/toml_wrapper.cpp
     src/menu.cpp
 )
 
@@ -74,10 +84,10 @@ target_compile_features(movie_booking_frontend_core
 
 target_link_libraries(movie_booking_frontend_core
     PUBLIC
-        drogon
         jsoncpp_lib
+        drogon
+        tomlplusplus::tomlplusplus
 )
-
 
 # --------------------------------------------------
 # Application Executable
@@ -92,6 +102,12 @@ target_link_libraries(movie-booking-frontend
         movie_booking_frontend_core
 )
 
+# Copy config.toml next to the compiled executable automatically on build
+add_custom_command(TARGET movie-booking-frontend POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${CMAKE_SOURCE_DIR}/config.toml"
+        "$<TARGET_FILE_DIR:movie-booking-frontend>/config.toml"
+)
 
 # --------------------------------------------------
 # Compiler Warnings

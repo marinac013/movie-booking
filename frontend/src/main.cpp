@@ -1,5 +1,6 @@
 #include "api_client.h"
 #include "menu.h"
+#include "toml_wrapper.h"
 
 #include <drogon/drogon.h>
 
@@ -9,6 +10,7 @@
 
 int main()
 {
+    MovieBooking::Config config = MovieBooking::Config::LoadConfig("config.toml");
     std::thread eventLoopThread([]()
     {
         drogon::app().run();
@@ -20,7 +22,7 @@ int main()
     }
 
     {
-        MovieBooking::ApiClient apiClient("http://127.0.0.1:8080");
+        MovieBooking::ApiClient apiClient("http://" + config.ip + ":" + std::to_string(config.port));
         
         if (!apiClient.IsHealthy())
         {

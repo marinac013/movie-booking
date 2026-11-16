@@ -1,19 +1,4 @@
-#include <drogon/drogon.h>
-
-#include "domain/movie.h"
-#include "domain/screening.h"
-#include "domain/theater.h"
-#include "repos/screening_repo.h"
-#include "repos/booking_repo.h"
-#include "services/booking_service.h"
-#include "api/booking_controller.h"
-#include "api/movie_controller.h"
-#include "api/theater_controller.h"
-#include "api/screening_controller.h"
-#include "app_info.h"
-
-#include <iostream>
-#include <chrono>
+#include "main.h"
 
 int main()
 {
@@ -44,17 +29,21 @@ int main()
         theaterRepository,
         screeningRepository);
 
-    // Register API routes
+    /// Register API routes
     MovieBooking::MovieController::RegisterRoutes(catalogService);
     MovieBooking::TheaterController::RegisterRoutes(catalogService);
     MovieBooking::ScreeningController::RegisterRoutes(catalogService);
     MovieBooking::BookingController::RegisterRoutes(bookingService);
 
-    std::cout << "[ INFO ] Application started successfully!" << std::endl;
+    MovieBooking::Config config = MovieBooking::Config::LoadConfig("config.toml");
+    std::cout << "[ INFO ] Starting application on "
+              << config.ip << ":" << config.port
+              << " with " << config.threads << " threads." << std::endl
+              << "[ INFO ] Application started successfully!" << std::endl;
 
     drogon::app()
-        .addListener("0.0.0.0", 8080)
-        .setThreadNum(4)
+        .addListener(config.ip, config.port)
+        .setThreadNum(config.threads)
         .run();
 
     return 0;

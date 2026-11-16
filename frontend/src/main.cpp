@@ -21,28 +21,17 @@ int main()
 
     {
         MovieBooking::ApiClient apiClient("http://127.0.0.1:8080");
-
-        std::cout << "Checking backend connection..." << std::endl;
-
-        const MovieBooking::ApiResponse response =
-            apiClient.Get("/api/health");
-
-        if (!response.transportSuccess)
+        
+        if (!apiClient.IsHealthy())
         {
-            std::cout << "Backend connection failed: "
-                      << response.error << "\n";
+            std::cout << "Backend is not healthy. Exiting." << std::endl;
+            drogon::app().quit();
+            eventLoopThread.join();
+            return 1;
         }
         else
         {
-            if (!response.error.empty())
-            {
-                std::cout << response.error << std::endl;
-                std::cout << response.rawBody << std::endl;
-            }
-            else
-            {
-                std::cout << "Backend response: success" << std::endl;
-            }
+            std::cout << "Backend is healthy. Starting application..." << std::endl;
         }
 
         MovieBooking::Menu menu(apiClient);

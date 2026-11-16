@@ -30,6 +30,18 @@ ApiResponse ApiClient::Post(const std::string& path, const Json::Value& body)
     return this->SendRequest(request);
 }
 
+bool ApiClient::IsHealthy()
+{
+    const ApiResponse response = this->Get("/api/health");
+
+    if (!response.transportSuccess)
+    {
+        return false;
+    }
+
+    return response.statusCode == 200;
+}
+
 ApiResponse ApiClient::SendRequest(const drogon::HttpRequestPtr& request)
 {
     ApiResponse result;

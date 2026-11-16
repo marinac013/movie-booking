@@ -25,6 +25,7 @@ public:
 
     ApiResponse Get(const std::string& path);
     ApiResponse Post(const std::string& path, const Json::Value& body);
+    bool IsHealthy();
 
 private:
     ApiResponse SendRequest(const drogon::HttpRequestPtr& request);

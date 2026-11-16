@@ -45,7 +45,7 @@ int main()
             }
         }
 
-        MovieBooking::Menu menu;
+        MovieBooking::Menu menu(apiClient);
         menu.Run();
     }
 

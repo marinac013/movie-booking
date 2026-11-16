@@ -24,6 +24,7 @@ ApiResponse ApiClient::Post(const std::string& path, const Json::Value& body)
 {
     auto request = drogon::HttpRequest::newHttpJsonRequest(body);
 
+    request->setMethod(drogon::Post);
     request->setPath(path);
 
     return this->SendRequest(request);

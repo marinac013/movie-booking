@@ -99,11 +99,11 @@ target_link_libraries(movie_booking_core
 # Application Executable
 # --------------------------------------------------
 
-add_executable(movie_booking
+add_executable(movie-booking-backend
     src/main.cpp
 )
 
-target_link_libraries(movie_booking
+target_link_libraries(movie-booking-backend
     PRIVATE
         movie_booking_core
 )
@@ -115,14 +115,14 @@ target_link_libraries(movie_booking
 
 if(MSVC)
     target_compile_options(movie_booking_core PRIVATE /W4)
-    target_compile_options(movie_booking PRIVATE /W4)
+    target_compile_options(movie-booking-backend PRIVATE /W4)
 else()
     target_compile_options(movie_booking_core PRIVATE
         -Wall
         -Wextra
         -Wpedantic
     )
-    target_compile_options(movie_booking PRIVATE
+    target_compile_options(movie-booking-backend PRIVATE
         -Wall
         -Wextra
         -Wpedantic

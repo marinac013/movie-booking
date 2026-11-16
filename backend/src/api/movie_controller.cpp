@@ -127,6 +127,15 @@ void MovieController::RegisterRoutes(CatalogService& catalogService)
                 item["id"] = screening.GetId();
                 item["movieId"] = screening.GetMovie().GetId();
                 item["theaterId"] = screening.GetTheater().GetId();
+                item["startTime"] = [&]() { 
+                    auto t = std::chrono::system_clock::to_time_t(screening.GetStartTime()); 
+                    if (auto* tm_ptr = std::localtime(&t)) {
+                        std::ostringstream oss; 
+                        oss << std::put_time(tm_ptr, "%Y-%m-%d %H:%M:%S"); 
+                        return oss.str(); 
+                    }
+                    return std::string{}; 
+                }();
 
                 response.append(item);
             }

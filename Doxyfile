@@ -1,0 +1,19 @@
+PROJECT_NAME           = "Movie Booking System"
+PROJECT_BRIEF          = "C++17 movie ticket booking backend and CLI frontend"
+
+OUTPUT_DIRECTORY       = docs/
+HTML_OUTPUT            = html
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+
+INPUT                  = README.md backend/include backend/src frontend/include frontend/src
+FILE_PATTERNS           = *.h *.hpp *.cpp *.md
+RECURSIVE              = YES
+USE_MDFILE_AS_MAINPAGE = README.md
+
+EXTRACT_ALL            = YES
+WARN_IF_UNDOCUMENTED   = NO
+QUIET                  = NO
+
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = NO

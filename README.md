@@ -27,3 +27,15 @@ movie_booking/
 The backend owns the booking domain and REST API. The frontend presents the
 booking workflow in the terminal and calls that API. Each component has its own
 CMake project and build script.
+
+## API documentation
+
+Install Doxygen, then generate the HTML documentation from the repository root:
+
+```bash
+doxygen Doxyfile
+```
+
+To view it on any platform, open `docs/html/index.html` in your browser:
+use the browser's **Open File** option and select that file, or drag the file
+into an open browser window.

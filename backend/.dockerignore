@@ -1,0 +1,10 @@
+.git
+.vscode
+.idea
+build/
+cmake-build-*/
+*.o
+*.a
+*.so
+CMakeCache.txt
+CMakeFiles/

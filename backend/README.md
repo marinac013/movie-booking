@@ -1,126 +1,119 @@
-
 # Movie Booking Backend
 
-A cross-platform C++ backend service for online movie ticket booking.
+The backend is a C++17 REST API built with CMake and Drogon.
 
-## Overview
+## Dependencies
 
-The application provides functionality for browsing movies, viewing theaters and screenings, checking seat availability and booking movie seats.
+You need:
 
-The backend is implemented in C++17 and uses CMake as its build system.
-
-## Technology Stack
-
-- C++17
-- CMake 3.20+
-- GoogleTest
-- Drogon
-- JsonCpp
-- STL
-
-## Prerequisites
-
-- git
-- C++17 compatible compiler (for example, g++)
 - CMake 3.20 or newer
-- Internet connection for initial GoogleTest download
+- A C++17 compiler and build tools
+- Git and an internet connection for CMake to fetch project dependencies
+- OpenSSL, UUID, and zlib development libraries
+
+JsonCpp 1.9.5, Drogon 1.9.8, and toml++ 3.4.0 are fetched by CMake. GoogleTest
+1.15.2 is fetched when tests are enabled.
+
+On Ubuntu or Debian, install the build tools and system libraries with:
 
 ```bash
 sudo apt update
-sudo apt install -y git gcc g++ cmake libjsoncpp-dev uuid-dev zlib1g-dev \
-  libssl-dev libbrotli-dev libc-ares-dev libpq-dev libmariadb-dev \
-  libsqlite3-dev libhiredis-dev
-
+sudo apt install -y build-essential cmake git ca-certificates \
+  uuid-dev libssl-dev zlib1g-dev
 ```
 
-## Build Instructions
+On Windows, install Visual Studio 2022 with the **Desktop development with C++**
+workload, CMake, and Git. Install OpenSSL and zlib for your target architecture
+(for example, with vcpkg), then configure with the vcpkg CMake toolchain file:
 
-### Linux
+```powershell
+vcpkg install openssl zlib
+cmake -S . -B build -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
+```
+
+Replace `C:/vcpkg` with your vcpkg installation path. JsonCpp, Drogon, and
+toml++ are still fetched by CMake.
+
+## Build and run
+
+From this directory:
 
 ```bash
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
-cmake --build build --parallel
+cmake --build build --parallel 8
+./build/bin/movie-booking-backend
 ```
 
-Run the application:
-
-```bash
-./build/movie_booking
-```
-
-### Windows
-
-Using Visual Studio 2019 or newer:
+With Visual Studio on Windows, run these commands from this directory after
+installing the dependencies above:
 
 ```powershell
-cmake -S . -B build
-
+cmake -S . -B build -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
 cmake --build build --config Debug
+.\build\Debug\movie-booking-backend.exe
 ```
 
-Run the application:
-
-```powershell
-.\build\Debug\movie_booking.exe
-```
-
-### macOS
+The server reads `config.toml` from its current working directory. By default,
+it listens on `127.0.0.1:8080`. Check that it is responding with:
 
 ```bash
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
-
-cmake --build build --parallel
+curl http://127.0.0.1:8080/api/health
 ```
 
-Run the application:
+## Run tests
+
+Tests are disabled by default. Configure and run them with:
 
 ```bash
-./build/movie_booking
-```
-
-## Running Tests
-
-The test suite covers this application only; tests from fetched libraries are
-disabled. Configure with `BUILD_TESTING=ON` to build and run the application tests:
-
-```bash
-cmake -S . -B build -DBUILD_TESTING=ON
-cmake --build build --parallel
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON
+cmake --build build --parallel 8
 ctest --test-dir build --output-on-failure
 ```
 
-On Windows with a multi-configuration generator:
+For a Visual Studio multi-configuration build, use:
 
 ```powershell
+cmake -S . -B build -DBUILD_TESTING=ON -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
+cmake --build build --config Debug
 ctest --test-dir build -C Debug --output-on-failure
 ```
 
-## Config
+## Run in Docker
 
-If you want to change backend ip address and port edit config.toml file.
+The Dockerfile builds the backend image from this directory. The server must
+listen on all container interfaces for a published Docker port to reach it.
+Set `ip` to `0.0.0.0` in `config.toml` before building the image:
 
-## Current Functionality
+```toml
+[server]
+ip = "0.0.0.0"
+port = 8080
+threads = 4
+```
 
-- Application initialization
-- Cross-platform CMake configuration
-- GoogleTest integration
-- Basic application information module
-- Movie and theater management
-- Screening management
-- Seat availability
-- Ticket booking
-- Concurrent booking protection
-- HTTP Server (Drogon)
-- REST API
+Build and run the container from the repository root:
 
-## Future Development
+```bash
+docker build -t movie-booking-backend ./backend
+docker run --rm --name movie-booking-backend -p 8080:8080 movie-booking-backend
+```
 
-- Doxygen Documentation
-- Docker support
-- Front-end Console Application
-- clang-tidy
+Then check the health endpoint from the host:
 
-## REST API Interface for Backend Application
+```bash
+curl http://127.0.0.1:8080/api/health
+```
+
+`EXPOSE 8080` documents the container port; `-p 8080:8080` publishes it on the
+host. To stop the container, press Ctrl+C in the terminal running it.
+
+## Configuration
+
+Edit `config.toml` to set the server IP address, port, and worker thread count.
+The frontend has its own `config.toml` for the backend address it connects to.
+
+## REST API
+
 | Method | Endpoint | Purpose |
 |---|---|---|
 | GET | `/api/health` | Server health |
@@ -132,16 +125,3 @@ If you want to change backend ip address and port edit config.toml file.
 | GET | `/api/screenings/{id}/seats` | Available seats |
 | POST | `/api/screenings/{id}/bookings` | Book seats |
 | GET | `/api/bookings/{id}` | Retrieve a booking |
-
-## Responsibilities
-
-| Component | Responsibility |
-|---|---|
-| `backend` | REST API, business logic, domain model, repositories, concurrency and in-memory storage |
-| `frontend` | CLI interface, user input, displaying results and communicating with the backend |
-| `frontend/api_client` | HTTP communication with the backend REST API |
-| `frontend/menu` | CLI menus and booking workflow |
-
-## Limitations
-
-The current version is an initial project setup. Booking functionality and persistent storage have not yet been implemented.

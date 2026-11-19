@@ -22,7 +22,6 @@ set(_movie_booking_build_testing ${BUILD_TESTING})
 # Dependencies via FetchContent (JsonCpp & Drogon)
 # --------------------------------------------------
 
-# Keep dependency test suites disabled while adding their targets.
 set(BUILD_TESTING OFF)
 
 include(FetchContent)
@@ -38,6 +37,30 @@ set(JSONCPP_WITH_POST_BUILD_UNITTEST OFF CACHE BOOL "" FORCE)
 
 FetchContent_MakeAvailable(jsoncpp)
 
+FetchContent_GetProperties(
+    jsoncpp
+    SOURCE_DIR JSONCPP_SOURCE_DIR
+)
+
+# JsonCpp 1.9.5 adds a generated include directory that is not created by its
+# FetchContent build. Its public headers are available directly from the source.
+set_property(
+    TARGET jsoncpp_lib
+    PROPERTY INTERFACE_INCLUDE_DIRECTORIES
+        "$<BUILD_INTERFACE:${JSONCPP_SOURCE_DIR}/include>"
+)
+
+# Tell Drogon to use the FetchContent version.
+set(JSONCPP_INCLUDE_DIRS
+    "${JSONCPP_SOURCE_DIR}/include"
+    CACHE PATH "" FORCE
+)
+
+set(JSONCPP_LIBRARIES
+    jsoncpp_lib
+    CACHE STRING "" FORCE
+)
+
 FetchContent_Declare(
     drogon
     GIT_REPOSITORY https://github.com/drogonframework/drogon.git
@@ -49,13 +72,13 @@ set(BUILD_CTL OFF CACHE BOOL "" FORCE)
 
 FetchContent_MakeAvailable(drogon)
 
-include(FetchContent)
 FetchContent_Declare(
     tomlplusplus
     GIT_REPOSITORY https://github.com/marzer/tomlplusplus.git
     GIT_TAG        v3.4.0
     GIT_SHALLOW    TRUE
 )
+
 FetchContent_MakeAvailable(tomlplusplus)
 
 set(BUILD_TESTING ${_movie_booking_build_testing})

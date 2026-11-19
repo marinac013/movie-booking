@@ -65,7 +65,7 @@ cmake --build build --config Debug
 Replace `C:/vcpkg` with your vcpkg installation path. See the backend and
 frontend READMEs for detailed dependencies, configuration, and test commands.
 
-## API documentation
+## Documentation
 
 Install Doxygen, then generate the HTML documentation from the repository root:
 
@@ -76,3 +76,17 @@ doxygen Doxyfile
 To view it on any platform, open `docs/html/index.html` in your browser:
 use the browser's **Open File** option and select that file, or drag the file
 into an open browser window.
+
+## REST API
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `/api/health` | Server health |
+| GET | `/api/movies` | List movies |
+| GET | `/api/movies/{id}` | Movie details |
+| GET | `/api/movies/{id}/theaters` | Theaters showing a movie |
+| GET | `/api/movies/{id}/screenings` | Screenings for a movie |
+| GET | `/api/theaters/{id}/screenings` | Screenings at a theater |
+| GET | `/api/screenings/{id}/seats` | Available seats |
+| POST | `/api/screenings/{id}/bookings` | Book seats |
+| GET | `/api/bookings/{id}` | Retrieve a booking |

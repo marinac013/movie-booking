@@ -10,6 +10,7 @@
 namespace MovieBooking
 {
 
+/** @brief Service class for managing movie, theater, and screening data. */
 class CatalogService
 {
 public:
@@ -66,8 +67,11 @@ public:
     std::optional<Screening> GetScreeningById(int screeningId) const;
 
 private:
+    /** @brief The movie repository instance. */
     MovieRepository& movieRepository;
+    /** @brief The theater repository instance. */
     TheaterRepository& theaterRepository;
+    /** @brief The screening repository instance. */
     ScreeningRepository& screeningRepository;
 };
 

@@ -6,6 +6,9 @@
 namespace MovieBooking
 {
 
+/** @brief Gets the name of the application.
+ *  @return The application name.
+ */
 std::string GetApplicationName();
 
 }

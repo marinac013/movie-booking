@@ -8,9 +8,11 @@
 namespace MovieBooking
 {
 
+/** @brief Represents an API response. */
 class ApiResponse
 {
 public:
+    /** @brief Creates a JSON API response. */
     static drogon::HttpResponsePtr Json(
         const Json::Value& data,
         drogon::HttpStatusCode status = drogon::k200OK)
@@ -22,6 +24,7 @@ public:
         return response;
     }
 
+    /** @brief Creates an error API response. */
     static drogon::HttpResponsePtr Error(
         const std::string& message,
         drogon::HttpStatusCode status)

@@ -19,6 +19,7 @@ struct ApiResponse
     std::string error;
 };
 
+/** @brief A class for interacting with the API. */
 class ApiClient
 {
 public:

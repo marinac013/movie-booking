@@ -11,6 +11,7 @@
 namespace MovieBooking
 {
 
+/** @brief Manages storage and retrieval of booking data. */
 class BookingRepository
 {
 public:
@@ -39,7 +40,9 @@ public:
     bool Exists(uint id) const;
 
 private:
+    /** @brief The map storing all bookings. */
     std::unordered_map<uint, Booking> bookings;
+    /** @brief The mutex protecting the booking map. */
     mutable std::shared_mutex repositoryMutex;
 };
 

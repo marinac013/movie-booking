@@ -11,9 +11,17 @@
 namespace MovieBooking
 {
 
+/** @brief Represents a movie screening. */
 class Screening
 {
 public:
+    /**
+     * @brief Constructs a screening.
+     * @param id Unique screening ID.
+     * @param movie Movie being screened.
+     * @param theater Theater where the screening is held.
+     * @param startTime Screening start time.
+     */
     Screening(
         uint id,
         const Movie& movie,
@@ -71,10 +79,15 @@ public:
     bool ReserveSeats(const std::vector<std::string>& seatIds) ;
 
 private:
+    /** @brief The screening ID. */
     uint id;
+    /** @brief The movie being screened. */
     Movie movie;
+    /** @brief The theater where the screening is held. */
     Theater theater;
+    /** @brief The start time of the screening. */
     std::chrono::system_clock::time_point startTime;
+    /** @brief The set of booked seat IDs. */
     std::unordered_set<std::string> bookedSeatIds;
 };
 

@@ -5,6 +5,7 @@
 namespace MovieBooking
 {
 
+/** @brief Represents a movie booking. */
 class Booking
 {
 public:
@@ -46,9 +47,13 @@ public:
     std::chrono::system_clock::time_point GetBookedAt() const;
 
 private:
+    /** @brief The booking ID. */
     uint id;
+    /** @brief The screening ID. */
     uint screeningId;
+    /** @brief The reserved seat IDs. */
     std::vector<std::string> seatIds;
+    /** @brief The booking timestamp. */
     std::chrono::system_clock::time_point bookedAt;
 };
 

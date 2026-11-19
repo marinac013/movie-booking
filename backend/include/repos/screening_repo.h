@@ -12,6 +12,7 @@
 namespace MovieBooking
 {
 
+/** @brief Manages storage and retrieval of screening data. */
 class ScreeningRepository
 {
 public:
@@ -61,9 +62,13 @@ public:
     std::unique_lock<std::mutex> LockFor(uint screeningId) const;
 
 private:
+    /** @brief The map storing all screenings. */
     std::unordered_map<uint, Screening> screenings;
+    /** @brief The mutex protecting the screening map. */
     mutable std::shared_mutex repositoryMutex;
+    /** @brief The map storing locks for individual screenings. */
     mutable std::unordered_map<uint, std::shared_ptr<std::mutex>> screeningLocks;
+    /** @brief The mutex protecting the screening locks map. */
     mutable std::mutex locksMutex;
 };
 

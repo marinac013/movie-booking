@@ -9,6 +9,7 @@
 namespace MovieBooking
 {
 
+/** @brief Manages storage and retrieval of theater data. */
 class TheaterRepository
 {
 public:
@@ -40,6 +41,7 @@ public:
     bool Exists(uint id) const;
 
 private:
+    /** @brief The map storing all theaters. */
     std::unordered_map<uint, Theater> theaters;
 };
 

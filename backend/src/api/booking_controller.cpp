@@ -3,6 +3,7 @@
 
 #include <drogon/drogon.h>
 
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -16,6 +17,8 @@ void BookingController::RegisterRoutes(BookingService& bookingService)
     [](const drogon::HttpRequestPtr&,
         std::function<void(const drogon::HttpResponsePtr&)>&& callback)
     {
+        std::cout << "[ INFO ] Health check endpoint called." << std::endl;
+
         Json::Value response;
         response["status"] = "ok";
         response["service"] = "movie-booking";
@@ -34,6 +37,9 @@ void BookingController::RegisterRoutes(BookingService& bookingService)
             std::function<void(const drogon::HttpResponsePtr&)>&& callback,
             int screeningId)
         {
+            std::cout << "[ INFO ] Booking request for screening "
+                      << screeningId << "." << std::endl;
+
             const auto json = request->getJsonObject();
 
             if (!json ||
@@ -159,6 +165,9 @@ void BookingController::RegisterRoutes(BookingService& bookingService)
             std::function<void(const drogon::HttpResponsePtr&)>&& callback,
             int bookingId)
         {
+            std::cout << "[ INFO ] Booking details requested for booking "
+                      << bookingId << "." << std::endl;
+
             const auto booking =
                 bookingService.GetBookingById(bookingId);
 

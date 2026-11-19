@@ -3,6 +3,8 @@ backend/build/
 backend/uploads/
 frontend/build/
 frontend/uploads/
+release/frontend/uploads
+release/backend/uploads
 
 # CMake generated files
 CMakeFiles/

@@ -3,6 +3,8 @@
 
 #include <drogon/drogon.h>
 
+#include <iostream>
+
 namespace MovieBooking
 {
 
@@ -19,6 +21,8 @@ void MovieController::RegisterRoutes(CatalogService& catalogService)
             const drogon::HttpRequestPtr&,
             std::function<void(const drogon::HttpResponsePtr&)>&& callback)
         {
+            std::cout << "[ INFO ] Movie list requested." << std::endl;
+
             Json::Value response(Json::arrayValue);
 
             const auto movies = catalogService.GetMovies();
@@ -44,6 +48,9 @@ void MovieController::RegisterRoutes(CatalogService& catalogService)
             std::function<void(const drogon::HttpResponsePtr&)>&& callback,
             int movieId)
         {
+            std::cout << "[ INFO ] Movie details requested for movie "
+                      << movieId << "." << std::endl;
+
             const auto movie = catalogService.GetMovieById(movieId);
 
             if (!movie.has_value())
@@ -70,6 +77,9 @@ void MovieController::RegisterRoutes(CatalogService& catalogService)
             std::function<void(const drogon::HttpResponsePtr&)>&& callback,
             int movieId)
         {
+            std::cout << "[ INFO ] Theaters requested for movie "
+                      << movieId << "." << std::endl;
+
             const auto movie = catalogService.GetMovieById(movieId);
 
             if (!movie.has_value())
@@ -106,6 +116,9 @@ void MovieController::RegisterRoutes(CatalogService& catalogService)
             std::function<void(const drogon::HttpResponsePtr&)>&& callback,
             int movieId)
         {
+            std::cout << "[ INFO ] Screenings requested for movie "
+                      << movieId << "." << std::endl;
+
             const auto movie = catalogService.GetMovieById(movieId);
 
             if (!movie.has_value())

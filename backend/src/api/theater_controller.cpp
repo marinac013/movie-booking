@@ -3,6 +3,8 @@
 
 #include <drogon/drogon.h>
 
+#include <iostream>
+
 namespace MovieBooking
 {
 
@@ -16,6 +18,9 @@ void TheaterController::RegisterRoutes(CatalogService& catalogService)
             std::function<void(const drogon::HttpResponsePtr&)>&& callback,
             int theaterId)
         {
+            std::cout << "[ INFO ] Screenings requested for theater "
+                      << theaterId << "." << std::endl;
+
             Json::Value response(Json::arrayValue);
 
             const auto screenings =
